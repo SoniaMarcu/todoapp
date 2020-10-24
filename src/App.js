@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Todos from './Todos';
+import AddTodo from './AddTodo'
 
-function App() {
+
+class  App extends Component {
+
+  state={
+    todo:[
+      {id: 1, content:  "play mario cart" },
+      {id: 2, content: "buy some milk"}
+    ]
+  }
+
+  deleteItem =(id)=>{
+    const filteredList=this.state.todo.filter((todo)=>{
+      return todo.id !==id
+    }
+    )
+
+    this.setState({todo : filteredList})
+  }
+
+  addTodo = (todo)=>{
+    console.log("from todo in parent")
+    let newList=[...this.state.todo, todo]
+    this.setState({todo: newList})
+  }
+
+ render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="todo-app container">
+      <h1 className="center blue-text">TODOS</h1>
+      <Todos todos={this.state.todo} deleteItem={this.deleteItem}  />
+     <AddTodo addTodo={this.addTodo} />
     </div>
   );
+ }
+ 
 }
 
 export default App;
